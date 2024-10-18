@@ -11,7 +11,7 @@ It supports:
 
 ### OVERVIEW
 
-Basenames are a core onchain building block that enables anyone to establish their identity on Base by registering human-readable names for their address(es). They are a fully onchain solution which leverages ENS infrastructure deployed on Base.
+Basenames are a core onchain building block that enables anyone to establish their identity on Base by registering human-readable names for their address(es). They are a fully onchain solution that leverages ENS infrastructure deployed on Base.
 
 ### CONTRACT ADDRESSES
 
@@ -62,7 +62,7 @@ The system architecture can be functionally organized into three categories:
 
 ### ARCHITECTURE
 
-The core functionality of Base Usernames should look familiar to anyone that's looked under the hood  at the [ENS contracts](https://github.com/ensdomains/ens-contracts/tree/staging). We implement a slimmed down fork of the ENS contracts here.
+The core functionality of Base Usernames should look familiar to anyone who's looked under the hood  at the [ENS contracts](https://github.com/ensdomains/ens-contracts/tree/staging). We implement a slimmed down fork of the ENS contracts here.
 
 | Contract | Role | ENS Implementation | Base Usernames Implementation |
 | -------- | ----- | ------------------ | ----------------------------- | 
@@ -71,11 +71,11 @@ The core functionality of Base Usernames should look familiar to anyone that's l
 | [ReverseRegistrar](https://docs.ens.domains/registry/reverse) | Manages the reverse lookup to allow the setting of "primary" names for an address | [ReverseRegistrar.sol](https://github.com/ensdomains/ens-contracts/blob/staging/contracts/reverseRegistrar/ReverseRegistrar.sol) | [ReverseRegistrar.sol](https://github.com/base-org/usernames/blob/master/contracts/src/L2/ReverseRegistrar.sol) |
 | [L1 Resolver](https://docs.ens.domains/resolvers/ccip-read) | Enables cross-chain, wildcard resolution from L1 | [OffchainResolver.sol](https://github.com/ensdomains/offchain-resolver/blob/main/packages/contracts/contracts/OffchainResolver.sol) | [L1Resolver.sol](https://github.com/base-org/usernames/blob/master/contracts/src/L1/L1Resolver.sol) | 
 | [L2 Resolver](https://docs.ens.domains/resolvers/public) | A standard public resolver for storing records associated with namespaces | [PublicResolver.sol](https://github.com/ensdomains/ens-contracts/blob/staging/contracts/resolvers/PublicResolver.sol) | [L2Resolver.sol](https://github.com/base-org/usernames/blob/master/contracts/src/L2/L2Resolver.sol) | 
-| Registrar Controller | A permissioned contract which manages registration payment | [ETHRegistrarController.sol](https://github.com/ensdomains/ens-contracts/blob/staging/contracts/ethregistrar/ETHRegistrarController.sol) | [RegistrarController.sol](https://github.com/base-org/usernames/blob/master/contracts/src/L2/RegistrarController.sol) |
+| Registrar Controller | A permission contract which manages registration payment | [ETHRegistrarController.sol](https://github.com/ensdomains/ens-contracts/blob/staging/contracts/ethregistrar/ETHRegistrarController.sol) | [RegistrarController.sol](https://github.com/base-org/usernames/blob/master/contracts/src/L2/RegistrarController.sol) |
 | Stable Price Oracle | The source of pricing based on name length and duration of registration | [StablePriceOracle.sol](https://github.com/ensdomains/ens-contracts/blob/staging/contracts/ethregistrar/StablePriceOracle.sol) | [StablePriceOracle.sol](https://github.com/base-org/usernames/blob/master/contracts/src/L2/StablePriceOracle.sol) |
 | Exponential Premium Oracle | A Dutch auction pricing mechanism for fairly pricing names after expiry | [ExponentialPremiumPricingOracle.sol](https://github.com/ensdomains/ens-contracts/blob/staging/contracts/ethregistrar/ExponentialPremiumPriceOracle.sol) | [ExponentialPremiumPricingOracle.sol](https://github.com/base-org/usernames/blob/master/contracts/src/L2/ExponentialPremiumPriceOracle.sol) | 
 
-In addition to replicating the base behavior of the ENS protocol, we are offering a series of promotional discounts associcated with various Coinbase product integrations. As such, the Base Usernames Registrar Controller allows users to perform discounted registrations while passing along integration-specific `validationData`. Each discount leverages a common interface: 
+In addition to replicating the base behavior of the ENS protocol, we are offering a series of promotional discounts associated with various Coinbase product integrations. As such, the Base Usernames Registrar Controller allows users to perform discounted registrations while passing along integration-specific `validationData`. Each discount leverages a common interface: 
 ```solidity
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.23;
@@ -89,7 +89,7 @@ interface IDiscountValidator {
     /// @notice Required implementation for compatibility with IDiscountValidator.
     ///
     /// @dev Each implementation will have unique requirements for the data necessary to perform
-    ///     a meaningul validation. Implementations must describe here how to pack relevant `validationData`.
+    ///     a meaningful validation. Implementations must describe here how to pack relevant `validationData`.
     ///     Ex: `bytes validationData = abi.encode(bytes32 key, bytes32[] proof)`
     ///
     /// @param claimer the discount claimer's address.
